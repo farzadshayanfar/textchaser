@@ -35,7 +35,7 @@ class MainForm(QMainWindow):
         self.advSplashProgressSig.emit("Creating Main Form Variables ...")
 
         # loading pretrained models for text detection
-        self._east = cv.dnn.readNet("res/pretrained_models/east.pb")
+        self._east = cv.dnn.readNet(model=project_resources.EastModelPath)
 
         self.threadPool = QThreadPool()
         self.tmpDirectory = tempfile.TemporaryDirectory()
@@ -58,7 +58,7 @@ class MainForm(QMainWindow):
         self.boxDirection = str()
         self.setMinimumSize(400, 220)
         self.setWindowTitle(self.Title)
-        self.setWindowIcon(QPixmap(project_resources.AppIcon))
+        self.setWindowIcon(QPixmap(project_resources.AppIconPath))
         self._screenSize = self.screen().size()
         self.resize(self._screenSize.width() // 2, self._screenSize.height() // 2)
         self.cWidget = QFrame(self)
@@ -76,7 +76,7 @@ class MainForm(QMainWindow):
         self.welcomeLabel = QLabel()
         self.welcomeLabel.setMinimumSize(10, 10)
         self.welcomeLabel.setText(f"""
-        <p style="text-align: center;">&nbsp;<img src={project_resources.AppIcon} width="150" height="160" /></p>
+        <p style="text-align: center;">&nbsp;<img src={project_resources.AppIconPath} width="150" height="160" /></p>
         <p style="text-align: center;"><em>Welcome to <strong>TextChaser</strong></em> ;</p>
         <p style="text-align: center;"><span style="background-color: #f7f7b7;">please toggle the <strong>
         Viewer Area</strong> to see the opened tabs</span></p>
@@ -86,8 +86,6 @@ class MainForm(QMainWindow):
         """)
 
         self.welcomeLabel.setWordWrap(True)
-        self.welcomeFont = QFont("Segoe UI", 11, 1, True)
-        self.welcomeLabel.setFont(self.welcomeFont)
         self.welcomeLabel.setVisible(False)
         # endregion main form variables
 
@@ -108,7 +106,7 @@ class MainForm(QMainWindow):
         self.mMenuBar.setContextMenuPolicy(Qt.PreventContextMenu)
 
         self.appIconAct = QAction()
-        self.appIconAct.setIcon(QPixmap(project_resources.AppIcon))
+        self.appIconAct.setIcon(QPixmap(project_resources.AppIconPath))
         self.appIconAct.triggered.connect(self.showAboutFcn)
 
         # region file menu
@@ -116,23 +114,23 @@ class MainForm(QMainWindow):
         self.openFileAct = QAction("Open file(s)", self)
         self.openFileAct.setStatusTip("Open image file(s)")
         self.openFileAct.setShortcut("Ctrl+O")
-        self.openFileAct.setIcon(QIcon("res/icons/open.png"))
+        self.openFileAct.setIcon(QPixmap(project_resources.OpenFileIconPath))
         self.openRecentFileSubMenu = QMenu("Open recent file(s)", self)
-        self.openRecentFileSubMenu.setIcon(QIcon("res/icons/history2.png"))
+        self.openRecentFileSubMenu.setIcon(QPixmap(project_resources.FileHistoryIconPath))
 
         self.saveResAct = self.Editor.saveAction
         self.printResAct = self.Editor.printAction
         self.pageViewAct = self.Editor.previewAction
         self.closeAllTabsAct = QAction("Close all tabs")
         self.closeAllTabsAct.setStatusTip("Close all currently open tabs")
-        self.closeAllTabsAct.setIcon(QIcon("res/icons/closeTabs.png"))
+        self.closeAllTabsAct.setIcon(QPixmap(project_resources.CloseTabsIconPath))
         self.settingsAct = QAction("Settings", self)
         self.settingsAct.setStatusTip("Show TextChaser settings")
-        self.settingsAct.setIcon(QIcon("res/icons/appSettings.png"))
+        self.settingsAct.setIcon(QPixmap(project_resources.SettingsIconPath))
         self.exitAct = QAction("Exit", self)
         self.exitAct.setStatusTip("Exit the program")
         self.exitAct.setShortcut("Ctrl+Q")
-        self.exitAct.setIcon(QIcon("res/icons/exit.png"))
+        self.exitAct.setIcon(QPixmap(project_resources.ExitIconPath))
 
         self.fileMenu.addAction(self.openFileAct)
         self.fileMenu.addMenu(self.openRecentFileSubMenu)
@@ -157,16 +155,16 @@ class MainForm(QMainWindow):
 
         self.resetZoomAct = QAction("Reset Zoom")
         self.resetZoomAct.setStatusTip("Reset zoom level for current image")
-        self.resetZoomAct.setIcon(QIcon("res/icons/resetZoom.png"))
+        self.resetZoomAct.setIcon(QPixmap(project_resources.ResetZoomIconPath))
         self.cropAct = QAction("Crop Image")
         self.cropAct.setStatusTip("Crop a section of current image")
-        self.cropAct.setIcon(QIcon("res/icons/crop.png"))
+        self.cropAct.setIcon(QPixmap(project_resources.CropIconPath))
         self.rotateAct = QAction("Rotate Image")
         self.rotateAct.setStatusTip("Rotate the current image")
-        self.rotateAct.setIcon(QIcon("res/icons/rotate.png"))
+        self.rotateAct.setIcon(QPixmap(project_resources.RotateIconPath))
         self.instantExtractAct = QAction("Instant Extract")
         self.instantExtractAct.setStatusTip("Extract a section from current image")
-        self.instantExtractAct.setIcon(QIcon("res/icons/instantSelection.png"))
+        self.instantExtractAct.setIcon(QPixmap(project_resources.InstantExtractionIconPath))
         self.colorMenu = QMenu("Set Color Space")
         self.colorMenu.setStatusTip("Convert color space")
         self.colorMenu.setIcon(QIcon("res/icons/colorSpace"))
@@ -211,12 +209,12 @@ class MainForm(QMainWindow):
 
         self.boxingFormAct = QAction("Box view (for sorting boxes)")
         self.boxingFormAct.setStatusTip("Show box insertion form")
-        self.boxingFormAct.setIcon(QIcon("res/icons/boxInsertionForm.png"))
+        self.boxingFormAct.setIcon(QPixmap(project_resources.BoxInsertionFormIconPath))
         self.boxingFormAct.triggered.connect(self.showBoxInsertionArea)
 
         self.folderViewAct = QAction("Folder view (for batch processing)")
         self.folderViewAct.setStatusTip("batch processing of all the images in a directory")
-        self.folderViewAct.setIcon(QIcon("res/icons/folderView.png"))
+        self.folderViewAct.setIcon(QPixmap(project_resources.FolderViewIconPath))
         self.folderViewAct.triggered.connect(self.showFolderView)
 
         self.toolsMenu.addActions([self.languageOptionsAct, self.boxingOptionsAct])
@@ -227,28 +225,28 @@ class MainForm(QMainWindow):
         # region view menu
         self.viewMenu = QMenu("&View", self)
         self.toggleToolBarAct = QAction("Toolbar", self)
-        self.toggleToolBarAct.setIcon(QIcon("res/icons/toolbar.png"))
+        self.toggleToolBarAct.setIcon(QPixmap(project_resources.ToolbarIconPath))
         self.toggleToolBarAct.setCheckable(True)
         self.toggleToolBarAct.setChecked(True)
         self.toggleToolBarAct.triggered.connect(self.toggleToolBarFcn)
 
         self.toggleTreeAct = QAction("File browser")
         self.toggleTreeAct.setShortcut(QKeySequence("alt+n"))
-        self.toggleTreeAct.setIcon(QIcon("res/icons/navigation.png"))
+        self.toggleTreeAct.setIcon(QPixmap(project_resources.NavigationIconPath))
         self.toggleTreeAct.setCheckable(True)
         self.toggleTreeAct.setChecked(False)
         self.toggleTreeAct.triggered.connect(self.toggleTreeFcn)
 
         self.toggleViewerAct = QAction("Viewer")
         self.toggleViewerAct.setShortcut(QKeySequence("alt+i"))
-        self.toggleViewerAct.setIcon(QIcon("res/icons/viewerArea.png"))
+        self.toggleViewerAct.setIcon(QPixmap(project_resources.ViewAreaIconPath))
         self.toggleViewerAct.setCheckable(True)
         self.toggleViewerAct.setChecked(True)
         self.toggleViewerAct.triggered.connect(self.toggleViewerFcn)
 
         self.toggleEditorAct = QAction("Editor")
         self.toggleEditorAct.setShortcut(QKeySequence("alt+c"))
-        self.toggleEditorAct.setIcon(QIcon("res/icons/editorArea.png"))
+        self.toggleEditorAct.setIcon(QPixmap(project_resources.EditorAreaIconPath))
         self.toggleEditorAct.setCheckable(True)
         self.toggleEditorAct.setChecked(True)
         self.toggleEditorAct.triggered.connect(self.toggleEditorFcn)

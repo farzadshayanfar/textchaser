@@ -12,13 +12,13 @@ class AboutDialog(QDialog):
         self.setWindowModality(Qt.ApplicationModal)
 
         self.setWindowTitle("About")
-        self.setWindowIcon(QPixmap(project_resources.AppIcon))
+        self.setWindowIcon(QPixmap(project_resources.AppIconPath))
         self.contentLabel = QLabel()
         self.okayButton = QPushButton("Okay")
         self.okayButton.clicked.connect(lambda: self.close())
         self.contentLabel.setText(f"""
         <div style="text-align: center;">
-        <img src={project_resources.AppIcon} alt="" width="110" height="110" />
+        <img src={project_resources.AppIconPath} alt="" width="110" height="110" />
         </div>
         <h3 style="text-align: center;"><em><strong>Welcome to TextChaser!</strong></em></h3>
         <p style="padding: 10px">

@@ -31,7 +31,7 @@ class ViewArea(QWidget):
         self.welcomeLabel = QLabel(self)
         self.welcomeLabel.setText(f"""
                <p style="text-align: center;">&nbsp;</p>
-               <p style="text-align: center;"><img src={project_resources.AppIcon} width="140" height="140" /></p>
+               <p style="text-align: center;"><img src={project_resources.AppIconPath} width="140" height="140" /></p>
                <p style="text-align: center;"><em>Welcome to <strong>TextChaser</strong></em> ;</p>
                <p style="text-align: center;"><em>to start please open or drag in some image file(s).</em></p>
                <p style="text-align: center;"><em>(you can load up to 30 files at the same time)</em></p>
@@ -85,7 +85,7 @@ class ViewArea(QWidget):
         tab_name = str()
         if len(file) > 15:
             tab_name = "..." + file[-12:]
-        self.tabWidget.insertTab(self.tabWidget.currentIndex() + 1, widget, QPixmap(project_resources.TabIcon),
+        self.tabWidget.insertTab(self.tabWidget.currentIndex() + 1, widget, QPixmap(project_resources.TabIconPath),
                                  tab_name)
         idx = self.tabWidget.currentIndex()
         self.tabWidget.setCurrentIndex(idx + 1)
