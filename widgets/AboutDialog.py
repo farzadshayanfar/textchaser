@@ -13,23 +13,26 @@ class AboutDialog(QDialog):
 
         self.setWindowTitle("About")
         self.setWindowIcon(QPixmap(project_resources.AppIcon))
-        self.aLabel = QLabel()
-        self.aBtn = QPushButton("Okay")
-        self.aBtn.clicked.connect(lambda: self.close())
-        self.aLabel.setText(f"""
-        <h3 style="text-align: center;"><em><strong><img src={project_resources.AppIcon} alt="" width="105" height="105" /></strong></em></h3>
-<h3 style="text-align: center;"><em><strong>Welcome to TextChaser!</strong></em></h3>
-<p style="text-align: center;">TextChaser uses Google Tesseract engine for text extraction from scene 
-or document image files. We have optimized the software for working with Farsi, English and Farsi-English documents.</p>
-<p style="text-align: center;">Developed by Farzad Shayanfar.
-</p>
-<p style="text-align: center;">Summer 2019.</p>
+        self.contentLabel = QLabel()
+        self.okayButton = QPushButton("Okay")
+        self.okayButton.clicked.connect(lambda: self.close())
+        self.contentLabel.setText(f"""
+        <div style="text-align: center;">
+        <img src={project_resources.AppIcon} alt="" width="110" height="110" />
+        </div>
+        <h3 style="text-align: center;"><em><strong>Welcome to TextChaser!</strong></em></h3>
+        <p style="padding: 10px">
+        TextChaser uses Google Tesseract engine for text extraction from scene or document image files. 
+        We have optimized the software for working with Farsi, English and Farsi-English documents.
+        </p>
+        <p style="text-align: center;">Developed by Farzad Shayanfar.
+        </p>
+        <p style="text-align: center;">Summer 2019.</p>
         """)
-        self.aLabel.setWordWrap(True)
+        self.contentLabel.setWordWrap(True)
         self.setFixedSize(300, 400)
         self.theLayout = QVBoxLayout()
         self.setLayout(self.theLayout)
-        # self.layout().addWidget(self.iconPixMapLbl)
-        self.theLayout.addWidget(self.aLabel)
+        self.theLayout.addWidget(self.contentLabel)
 
-        self.theLayout.addWidget(self.aBtn, 1, Qt.AlignHCenter)
+        self.theLayout.addWidget(self.okayButton, 1, Qt.AlignHCenter)
