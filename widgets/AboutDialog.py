@@ -1,6 +1,8 @@
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton
+
+import project_resources
 
 
 class AboutDialog(QDialog):
@@ -10,12 +12,12 @@ class AboutDialog(QDialog):
         self.setWindowModality(Qt.ApplicationModal)
 
         self.setWindowTitle("About")
-        self.setWindowIcon(QIcon("res/icons/TextChaser2.png"))
+        self.setWindowIcon(QPixmap(project_resources.AppIcon))
         self.aLabel = QLabel()
         self.aBtn = QPushButton("Okay")
         self.aBtn.clicked.connect(lambda: self.close())
-        self.aLabel.setText("""
-        <h3 style="text-align: center;"><em><strong><img src="res/icons/TextChaser2.png" alt="" width="105" height="105" /></strong></em></h3>
+        self.aLabel.setText(f"""
+        <h3 style="text-align: center;"><em><strong><img src={project_resources.AppIcon} alt="" width="105" height="105" /></strong></em></h3>
 <h3 style="text-align: center;"><em><strong>Welcome to TextChaser!</strong></em></h3>
 <p style="text-align: center;">TextChaser uses Google Tesseract engine for text extraction from scene 
 or document image files. We have optimized the software for working with Farsi, English and Farsi-English documents.</p>

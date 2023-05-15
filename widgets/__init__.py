@@ -11,7 +11,6 @@ from .LanguageOptions import LanguageOptions
 from .MainForm import MainForm
 from .ProgressBar import ProgressBar
 from .SettingsForm import SettingsForm
-from .SharedData import SharedData
 from .SplashScreen import SplashScreen
 from .StatusButton import StatusButton
 from .StatusLabel import StatusLabel

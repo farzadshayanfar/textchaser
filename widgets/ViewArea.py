@@ -1,9 +1,10 @@
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QPixmap
 from PySide6.QtWidgets import QTabWidget, QWidget, QLabel, \
     QMessageBox, QTabBar, QVBoxLayout
 
+import project_resources
 from widgets import ImageView
 
 
@@ -28,15 +29,15 @@ class ViewArea(QWidget):
         self.tabWidget.setTabsClosable(True)
 
         self.welcomeLabel = QLabel(self)
-        self.welcomeLabel.setText("""
+        self.welcomeLabel.setText(f"""
                <p style="text-align: center;">&nbsp;</p>
-               <p style="text-align: center;"><img src="%s" width="140" height="140" /></p>
+               <p style="text-align: center;"><img src={project_resources.AppIcon} width="140" height="140" /></p>
                <p style="text-align: center;"><em>Welcome to <strong>TextChaser</strong></em> ;</p>
                <p style="text-align: center;"><em>to start please open or drag in some image file(s).</em></p>
                <p style="text-align: center;"><em>(you can load up to 30 files at the same time)</em></p>
                <p style="text-align: center;">&nbsp;</p>
                <p style="text-align: center;">&nbsp;</p>
-               """ % self.mainFormHandle.sharedData.appIconAdd2)
+               """)
         self.welcomeFont = QFont("Segoe UI", 11, 2, True)
         self.welcomeLabel.setFont(self.welcomeFont)
         self.welcomeLabel.setWordWrap(True)
@@ -84,7 +85,7 @@ class ViewArea(QWidget):
         tab_name = str()
         if len(file) > 15:
             tab_name = "..." + file[-12:]
-        self.tabWidget.insertTab(self.tabWidget.currentIndex() + 1, widget, self.mainFormHandle.sharedData.imgIcon,
+        self.tabWidget.insertTab(self.tabWidget.currentIndex() + 1, widget, QPixmap(project_resources.TabIcon),
                                  tab_name)
         idx = self.tabWidget.currentIndex()
         self.tabWidget.setCurrentIndex(idx + 1)

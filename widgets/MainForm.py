@@ -2,11 +2,12 @@ import tempfile
 
 import cv2 as cv
 from PySide6.QtCore import Signal, QThreadPool, QSize, Qt
-from PySide6.QtGui import QCloseEvent, QFont, QIcon, QKeySequence, QAction
+from PySide6.QtGui import QCloseEvent, QFont, QIcon, QKeySequence, QAction, QPixmap
 from PySide6.QtWidgets import QMainWindow, QMenu, QToolBar, QSplitter, QMessageBox, QFileDialog, QApplication, \
     QToolButton, QStatusBar, QLabel, QVBoxLayout, QFrame
 from pytesseract import pytesseract
 
+import project_resources
 import widgets
 from scene_text_detectors import east_detector
 
@@ -28,7 +29,6 @@ class MainForm(QMainWindow):
         splashScreen = widgets.SplashScreen(parent=self)
         self.advSplashProgressSig.emit("Setting Configurations ...")
         self.advSplashProgressSig.connect(splashScreen.advProgressFcn)
-        self.sharedData = widgets.SharedData(mainFormHandle=self)
         # endregion setting configurations
 
         # region creating main form variables
@@ -58,7 +58,7 @@ class MainForm(QMainWindow):
         self.boxDirection = str()
         self.setMinimumSize(400, 220)
         self.setWindowTitle(self.Title)
-        self.setWindowIcon(self.sharedData.appIcon2)
+        self.setWindowIcon(QPixmap(project_resources.AppIcon))
         self._screenSize = self.screen().size()
         self.resize(self._screenSize.width() // 2, self._screenSize.height() // 2)
         self.cWidget = QFrame(self)
@@ -75,15 +75,15 @@ class MainForm(QMainWindow):
 
         self.welcomeLabel = QLabel()
         self.welcomeLabel.setMinimumSize(10, 10)
-        self.welcomeLabel.setText("""
-        <p style="text-align: center;">&nbsp;<img src="%s" width="150" height="160" /></p>
+        self.welcomeLabel.setText(f"""
+        <p style="text-align: center;">&nbsp;<img src={project_resources.AppIcon} width="150" height="160" /></p>
         <p style="text-align: center;"><em>Welcome to <strong>TextChaser</strong></em> ;</p>
         <p style="text-align: center;"><span style="background-color: #f7f7b7;">please toggle the <strong>
         Viewer Area</strong> to see the opened tabs</span></p>
         <p style="text-align: center;">Viewer__<span style="color: #003366;">Alt+I</span></p>
         <p style="text-align: center;">Editor__<span style="color: #003366;">Alt+C</span></p>
         <p style="text-align: center;">Browser__<span style="color: #003366;">Alt+N</span></p>
-        """ % self.sharedData.appIconAdd2)
+        """)
 
         self.welcomeLabel.setWordWrap(True)
         self.welcomeFont = QFont("Segoe UI", 11, 1, True)
@@ -108,7 +108,7 @@ class MainForm(QMainWindow):
         self.mMenuBar.setContextMenuPolicy(Qt.PreventContextMenu)
 
         self.appIconAct = QAction()
-        self.appIconAct.setIcon(self.sharedData.appIcon2)
+        self.appIconAct.setIcon(QPixmap(project_resources.AppIcon))
         self.appIconAct.triggered.connect(self.showAboutFcn)
 
         # region file menu
@@ -119,10 +119,7 @@ class MainForm(QMainWindow):
         self.openFileAct.setIcon(QIcon("res/icons/open.png"))
         self.openRecentFileSubMenu = QMenu("Open recent file(s)", self)
         self.openRecentFileSubMenu.setIcon(QIcon("res/icons/history2.png"))
-        for file in self.sharedData.recentOpenFiles:
-            action = QAction()
-            action.setText(file)
-            self.openRecentFileSubMenu.addAction(action)
+
         self.saveResAct = self.Editor.saveAction
         self.printResAct = self.Editor.printAction
         self.pageViewAct = self.Editor.previewAction
