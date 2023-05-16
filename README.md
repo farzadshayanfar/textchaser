@@ -1,4 +1,4 @@
-<img src="./github_readme_files/TextChaser2.png" width="125"/>
+<img src="./github_readme_files/textchaser.png" width="120"/>
 
 # TextChaser
 TextChaser is a gui application for

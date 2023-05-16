@@ -6,14 +6,13 @@ from project_resources import SplashScreenImagePath
 
 
 class SplashScreen(QSplashScreen):
-    def __init__(self, parent=None):
-        QSplashScreen.__init__(self, parent=parent)
+    def __init__(self):
+        super().__init__(pixmap=QPixmap(SplashScreenImagePath))
         self.mainFormHandle = self.parent()
         self.W = 600
         self.H = 400
         self.setFixedSize(self.W, self.H)
-        self.setPixmap(QPixmap(SplashScreenImagePath))
-
+        self.repaint()
         self.show()
 
     def advProgressFcn(self, aStr):

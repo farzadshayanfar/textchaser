@@ -8,17 +8,17 @@ class ProgressBar(QProgressBar):
         self.setRange(0, 100)
         self.setValue(0)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        self.setAlignment(Qt.AlignCenter)
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
     def getStep(self, items_count):
         remainder = 100 - self.value()
         step = round(remainder / items_count, 2)
         return step
 
-    def advance(self, int, finished=0):
+    def advance(self, value, finished=0):
         if finished:
             self.setValue(100)
             self.setVisible(False)
             self.reset()
             return
-        self.setValue(self.value() + int)
+        self.setValue(self.value() + value)

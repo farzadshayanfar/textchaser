@@ -7,9 +7,9 @@ from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QKeyEvent, QWh
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QApplication, QMenu, QGraphicsPixmapItem, \
     QInputDialog, QMessageBox, QGraphicsRectItem
 
+import project_resources
 from widgets.Worker import Worker
 
-import project_resources
 
 class ImageView(QGraphicsView):
     # Mouse button signals emit image scene (x, y) coordinates.
@@ -140,7 +140,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.ScrollHandDrag)
+        self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
 
     def zoomIn(self):
         self.panFlag = False
@@ -188,7 +188,6 @@ class ImageView(QGraphicsView):
         self.pixmapItem().setTransformOriginPoint(self.pixmapItem().pixmap().rect().center())
         self.pixmapItem().setRotation(d)
         self.nameChanger -= 1
-
 
     def cropImage(self):
         self.panFlag = False
@@ -279,24 +278,24 @@ class ImageView(QGraphicsView):
         if modifiers == Qt.ControlModifier and event.angleDelta().y() > 0:
             self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(self.wheelZoomCursor)
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(1.20, 1.20)
         elif modifiers == Qt.ControlModifier and event.angleDelta().y() < 0:
             self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(self.wheelZoomCursor)
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(0.83, 0.83)
 
     def mousePressEvent(self, event):
         scenePos = self.mapToScene(event.pos())
         if event.button() == Qt.LeftButton and self.panFlag:
-            self.setDragMode(QGraphicsView.ScrollHandDrag)
+            self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
 
         elif event.button() == Qt.LeftButton and self.cropFlag:
-            self.setDragMode(QGraphicsView.RubberBandDrag)
+            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
         elif event.button() == Qt.LeftButton and self.sExtractFlag:
-            self.setDragMode(QGraphicsView.RubberBandDrag)
+            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
         self.leftMouseButtonPressed.emit(scenePos.x(), scenePos.y())
         QGraphicsView.mousePressEvent(self, event)
@@ -311,11 +310,11 @@ class ImageView(QGraphicsView):
             self.threadPool.start(worker)
 
         elif event.button() == Qt.LeftButton and self.zoomInFlag:
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(1.20, 1.20)
 
         elif event.button() == Qt.LeftButton and self.zoomOutFlag:
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(0.83, 0.83)
 
         elif event.button() == Qt.LeftButton and self.sExtractFlag:

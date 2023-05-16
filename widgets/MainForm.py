@@ -2,7 +2,7 @@ import tempfile
 
 import cv2 as cv
 from PySide6.QtCore import Signal, QThreadPool, QSize, Qt
-from PySide6.QtGui import QCloseEvent, QFont, QIcon, QKeySequence, QAction, QPixmap
+from PySide6.QtGui import QCloseEvent, QIcon, QKeySequence, QAction, QPixmap
 from PySide6.QtWidgets import QMainWindow, QMenu, QToolBar, QSplitter, QMessageBox, QFileDialog, QApplication, \
     QToolButton, QStatusBar, QLabel, QVBoxLayout, QFrame
 from pytesseract import pytesseract
@@ -26,7 +26,7 @@ class MainForm(QMainWindow):
     def __init__(self):
         super(MainForm, self).__init__()
         # region setting configurations
-        splashScreen = widgets.SplashScreen(parent=self)
+        splashScreen = widgets.SplashScreen()
         self.advSplashProgressSig.emit("Setting Configurations ...")
         self.advSplashProgressSig.connect(splashScreen.advProgressFcn)
         # endregion setting configurations

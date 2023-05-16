@@ -1,10 +1,12 @@
 import cv2 as cv
 from PySide6.QtCore import Qt, Signal, QSize
-from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QIcon, QKeyEvent, QWheelEvent, QAction
+from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QKeyEvent, QWheelEvent, QAction
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QApplication, QMenu, QGraphicsPixmapItem, \
     QInputDialog, QGraphicsRectItem
 
 from widgets import Worker
+
+import project_resources
 
 
 class FolderViewViewer(QGraphicsView):
@@ -42,63 +44,63 @@ class FolderViewViewer(QGraphicsView):
         self.contextMenu = QMenu()
 
         self.panAct = QAction("Pan")
-        self.panAct.setIcon(QIcon("res/icons/pan.png"))
+        self.panAct.setIcon(QPixmap(project_resources.PanIconPath))
         self.panAct.triggered.connect(self.pan)
         self.panAct.setStatusTip("Pan across the image")
 
         self.zoomInAct = QAction("Zoom In")
-        self.zoomInAct.setIcon(QIcon("res/icons/zoomIn.png"))
-        self.zoomInPixmap = QPixmap("res/icons/zoomIn2.png")
+        self.zoomInPixmap = QPixmap(project_resources.ZoomInIconPath)
+        self.zoomInAct.setIcon(self.zoomInPixmap)
         self.zoomInCursor = QCursor(self.zoomInPixmap)
         self.zoomInAct.triggered.connect(self.zoomIn)
         self.zoomInAct.setStatusTip("Zoom in")
 
         self.zoomOutAct = QAction("Zoom Out")
-        self.zoomOutAct.setIcon(QIcon("res/icons/zoomOut.png"))
-        self.zoomOutPixmap = QPixmap("res/icons/zoomOut2.png")
+        self.zoomOutPixmap = QPixmap(project_resources.ZoomOutIconPath)
+        self.zoomOutAct.setIcon(self.zoomOutPixmap)
         self.zoomOutCursor = QCursor(self.zoomOutPixmap)
         self.zoomOutAct.triggered.connect(self.zoomOut)
         self.zoomOutAct.setStatusTip("Zoom out")
 
         self.resetZoomAct = QAction("Reset Zoom")
-        self.resetZoomAct.setIcon(QIcon("res/icons/resetZoom.png"))
+        self.resetZoomAct.setIcon(QPixmap(project_resources.ResetZoomIconPath))
         self.resetZoomAct.triggered.connect(self.resetZoom)
         self.resetZoomAct.setStatusTip("Reset zoom back to normal")
 
         self.cropAct = QAction("Crop Image")
-        self.cropAct.setIcon(QIcon("res/icons/crop.png"))
+        self.cropAct.setIcon(QPixmap(project_resources.CropIconPath))
         self.cropAct.triggered.connect(self.cropImage)
         self.cropAct.setStatusTip("Crop a rectangle of the image")
-        self.scissorsPixmap = QPixmap("res/icons/scissors2.png")
+        self.scissorsPixmap = QPixmap(project_resources.ScissorsIconPath)
         self.scissorsCursor = QCursor(self.scissorsPixmap)
 
         self.rotateAct = QAction("Rotate Image")
-        self.rotateAct.setIcon(QIcon("res/icons/rotate.png"))
+        self.rotateAct.setIcon(QPixmap(project_resources.RotateIconPath))
         self.rotateAct.triggered.connect(self.rotateImage)
         self.rotateAct.setStatusTip("Rotate the image")
 
         self.instantExtractAct = QAction("Instant Extract")
-        self.instantExtractAct.setIcon(QIcon("res/icons/instantSelection.png"))
+        self.instantExtractAct.setIcon(QPixmap(project_resources.InstantExtractionIconPath))
         self.instantExtractAct.triggered.connect(self.extractSingleBox)
         self.instantExtractAct.setStatusTip("Extract text from a rectangle")
 
         self.grayScaleAct = QAction("Grayscale")
-        self.grayScaleAct.setIcon(QIcon("res/icons/grayPalette.png"))
+        self.grayScaleAct.setIcon(QPixmap(project_resources.GrayscaleIconPath))
         self.grayScaleAct.triggered.connect(self.makeItGray)
         self.grayScaleAct.setStatusTip("Grayscale the image")
 
         self.binarizeAct = QAction("Binarize")
-        self.binarizeAct.setIcon((QIcon("res/icons/binaryPalette.png")))
+        self.binarizeAct.setIcon(QPixmap(project_resources.BinarizeIconPath))
         self.binarizeAct.triggered.connect(self.makeItBinary)
         self.binarizeAct.setStatusTip("Binarize the image")
 
         self.colorMenu = QMenu("Set Color Space")
-        self.colorMenu.setIcon(QIcon("res/icons/colorSpace"))
+        self.colorMenu.setIcon(QPixmap(project_resources.ColorSpaceIconPath))
         self.colorMenu.addActions([self.grayScaleAct, self.binarizeAct])
 
         self.resetImageAct = QAction("Reset")
         self.resetImageAct.triggered.connect(self.resetImage)
-        self.resetImageAct.setIcon(QIcon("res/icons/reset.png"))
+        self.resetImageAct.setIcon(QPixmap(project_resources.ResetIconPath))
         self.resetImageAct.setStatusTip("Reset image to original (reverts all changes)")
 
         self.contextMenu.addActions([self.panAct, self.zoomInAct, self.zoomOutAct, self.resetZoomAct, self.cropAct,
@@ -113,7 +115,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.wheelZoomPixmap = QPixmap("res/icons/wheelZoom.png")
+        self.wheelZoomPixmap = QPixmap(project_resources.MouseWheelIconPath)
         self.wheelZoomCursor = QCursor(self.wheelZoomPixmap)
 
         self.updatePixampSig.connect(self.setPixmapItem)
@@ -147,7 +149,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = True
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(Qt.CrossCursor)
 
     def pan(self):
@@ -158,7 +160,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.ScrollHandDrag)
+        self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
 
     def zoomIn(self):
         self.panFlag = False
@@ -168,7 +170,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.zoomInCursor)
 
     def zoomOut(self):
@@ -179,7 +181,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.zoomOutCursor)
 
     def resetZoom(self):
@@ -190,7 +192,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(Qt.ArrowCursor)
         self.updateViewer()
 
@@ -198,7 +200,7 @@ class FolderViewViewer(QGraphicsView):
         d, okPressed = QInputDialog.getDouble(self, "Rotate Image", "Value (from -360 to +360 degrees):",
                                               self._currentRotation, -360, 360, 3)
         if okPressed:
-            worker = Worker.Worker(self.doRotateImage, d)
+            worker = Worker(self.doRotateImage, d)
             self.threadPool.start(worker)
 
     def doRotateImage(self, d):
@@ -221,7 +223,7 @@ class FolderViewViewer(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.scissorsCursor)
 
     def pixmapItem(self):
@@ -243,12 +245,12 @@ class FolderViewViewer(QGraphicsView):
         self.updateViewer()
 
     def updateViewer(self):
-        worker = Worker.Worker(self.fitInView, self.pixmapItem(), Qt.KeepAspectRatioByExpanding)
+        worker = Worker(self.fitInView, self.pixmapItem(), Qt.KeepAspectRatioByExpanding)
         self.threadPool.start(worker)
 
     def resize(self, arg__1: QSize):
         old_size = self.size()
-        worker = Worker.Worker(self.resizeEvent, QResizeEvent(arg__1, old_size))
+        worker = Worker(self.resizeEvent, QResizeEvent(arg__1, old_size))
         self.threadPool.start(worker)
 
     def resizeEvent(self, event: QResizeEvent) -> None:
@@ -258,13 +260,13 @@ class FolderViewViewer(QGraphicsView):
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
         if event.key() == Qt.Key_Control:
-            self.setDragMode(QGraphicsView.NoDrag)
+            self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(self.wheelZoomCursor)
         super(FolderViewViewer, self).keyPressEvent(event)
 
     def keyReleaseEvent(self, event: QKeyEvent) -> None:
         if event.key() == Qt.Key_Escape:
-            self.setDragMode(QGraphicsView.NoDrag)
+            self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(Qt.ArrowCursor)
             self.panFlag = False
             self.zoomInFlag = False
@@ -274,9 +276,9 @@ class FolderViewViewer(QGraphicsView):
             self.sExtractFlag = False
 
         if event.key() == Qt.Key_Control:
-            self.setDragMode(QGraphicsView.NoDrag)
+            self.setDragMode(QGraphicsView.DragMode.NoDrag)
             if self.panFlag:
-                self.setDragMode(QGraphicsView.ScrollHandDrag)
+                self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
             elif self.zoomInFlag:
                 self.setCursor(self.zoomInCursor)
             elif self.zoomOutFlag:
@@ -292,26 +294,26 @@ class FolderViewViewer(QGraphicsView):
     def wheelEvent(self, event: QWheelEvent) -> None:
         modifiers = QApplication.keyboardModifiers()
         if modifiers == Qt.ControlModifier and event.angleDelta().y() > 0:
-            self.setDragMode(QGraphicsView.NoDrag)
+            self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(self.wheelZoomCursor)
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(1.20, 1.20)
         elif modifiers == Qt.ControlModifier and event.angleDelta().y() < 0:
-            self.setDragMode(QGraphicsView.NoDrag)
+            self.setDragMode(QGraphicsView.DragMode.NoDrag)
             self.setCursor(self.wheelZoomCursor)
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(0.83, 0.83)
 
     def mousePressEvent(self, event):
         scenePos = self.mapToScene(event.pos())
         if event.button() == Qt.LeftButton and self.panFlag:
-            self.setDragMode(QGraphicsView.ScrollHandDrag)
+            self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
 
         elif event.button() == Qt.LeftButton and self.cropFlag:
-            self.setDragMode(QGraphicsView.RubberBandDrag)
+            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
         elif event.button() == Qt.LeftButton and self.sExtractFlag:
-            self.setDragMode(QGraphicsView.RubberBandDrag)
+            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
         self.leftMouseButtonPressed.emit(scenePos.x(), scenePos.y())
         QGraphicsView.mousePressEvent(self, event)
@@ -322,19 +324,19 @@ class FolderViewViewer(QGraphicsView):
         QGraphicsView.mouseReleaseEvent(self, event)
         scenePos = self.mapToScene(event.pos())
         if event.button() == Qt.LeftButton and self.cropFlag:
-            worker = Worker.Worker(self.cropIt)
+            worker = Worker(self.cropIt)
             self.threadPool.start(worker)
 
         elif event.button() == Qt.LeftButton and self.zoomInFlag:
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(1.20, 1.20)
 
         elif event.button() == Qt.LeftButton and self.zoomOutFlag:
-            self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+            self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
             self.scale(0.83, 0.83)
 
         elif event.button() == Qt.LeftButton and self.sExtractFlag:
-            worker = Worker.Worker(self.extractSelection)
+            worker = Worker(self.extractSelection)
             self.threadPool.start(worker)
 
         self.leftMouseButtonReleased.emit(scenePos.x(), scenePos.y())
@@ -359,7 +361,7 @@ class FolderViewViewer(QGraphicsView):
         self.FolderViewHandle.mainFormHandle.extractTextFromDocs(output_add, 1)
 
     def makeItBinary(self):
-        worker = Worker.Worker(self.dotheBinarizing)
+        worker = Worker(self.dotheBinarizing)
         self.threadPool.start(worker)
 
     def dotheBinarizing(self):
@@ -376,7 +378,7 @@ class FolderViewViewer(QGraphicsView):
         self.updatePixampSig.emit(pixmap, QImage())
 
     def makeItGray(self):
-        worker = Worker.Worker(self.dotheGraying)
+        worker = Worker(self.dotheGraying)
         self.threadPool.start(worker)
 
     def dotheGraying(self):

@@ -7,8 +7,6 @@ class SwitchButton(QPushButton):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setCheckable(True)
-        # self.setMinimumWidth(160)
-        # self.setMinimumHeight(50)
         self.setFixedSize(85, 38)
 
         self.setStyleSheet("""
@@ -28,10 +26,6 @@ class SwitchButton(QPushButton):
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
         painter.translate(center)
         painter.setBrush(QtGui.QColor(235, 235, 235))
-
-        pen = QtGui.QPen(Qt.black)
-        pen.setWidth(0)
-        painter.setPen(pen)
 
         painter.drawRoundedRect(QRect(-width, -radius, 2 * width, 2 * radius), radius, radius)
         painter.setBrush(QtGui.QBrush(bg_color))

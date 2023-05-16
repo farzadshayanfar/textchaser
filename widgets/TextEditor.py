@@ -7,13 +7,14 @@ from PySide6.QtGui import QIcon, QContextMenuEvent, QFont, QTextCharFormat, QTex
     QTextBlockFormat, QAction
 from PySide6.QtWidgets import QToolBar, QMenu, QFrame, QTextEdit
 
+import widgets
 from widgets.text_editor_objects import MarginDialog, WordCount, Find, Datetime, Table, LineSpacingDialog
 
 
 class Editor(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None):
-        QtWidgets.QMainWindow.__init__(self, parent)
+    def __init__(self, parent: widgets.MainForm):
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
 
         self.mainFormHandle = parent
 
@@ -38,9 +39,6 @@ class Editor(QtWidgets.QMainWindow):
         block_format.setLineHeight(self.lineSpacing, 4)
         self.text.textCursor().setBlockFormat(block_format)
 
-        self.initToolbar()
-        self.initFormatbar()
-
         # If the cursor position changes, call the function that displays
         # the line and column number
         self.text.cursorPositionChanged.connect(self.cursorPosition)
@@ -51,7 +49,6 @@ class Editor(QtWidgets.QMainWindow):
 
         self.text.textChanged.connect(self.changed)
 
-    def initToolbar(self):
         self.openAction = QAction(QIcon("res/icons/open.png"), "Open file", self)
         self.openAction.setStatusTip("Open existing document")
         self.openAction.setShortcut("Ctrl+O")
@@ -155,8 +152,6 @@ class Editor(QtWidgets.QMainWindow):
         self.toolbar.addAction(numberedAction)
 
         self.addToolBarBreak()
-
-    def initFormatbar(self):
 
         fontBox = QtWidgets.QFontComboBox(self)
         fontBox.setStatusTip("Set document font")
