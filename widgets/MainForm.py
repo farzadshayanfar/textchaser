@@ -2,7 +2,7 @@ import tempfile
 
 import cv2 as cv
 from PySide6.QtCore import Signal, QThreadPool, QSize, Qt
-from PySide6.QtGui import QCloseEvent, QIcon, QKeySequence, QAction, QPixmap
+from PySide6.QtGui import QCloseEvent, QKeySequence, QAction, QPixmap
 from PySide6.QtWidgets import QMainWindow, QMenu, QToolBar, QSplitter, QMessageBox, QFileDialog, QApplication, \
     QToolButton, QStatusBar, QLabel, QVBoxLayout, QFrame
 from pytesseract import pytesseract
@@ -199,12 +199,12 @@ class MainForm(QMainWindow):
         self.toolsMenu = QMenu("&Tools", self)
         self.languageOptionsAct = QAction("Language options")
         self.languageOptionsAct.setStatusTip("Set extraction language and page segmentation mode")
-        self.languageOptionsAct.setIcon(QIcon("res/icons/lang2.png"))
+        self.languageOptionsAct.setIcon(QPixmap(project_resources.LanguageIconPath))
         self.languageOptionsAct.triggered.connect(self.showLanguageOptions)
 
         self.boxingOptionsAct = QAction("Boxing options")
         self.boxingOptionsAct.setStatusTip("Set boxing direction and padding value")
-        self.boxingOptionsAct.setIcon(QIcon("res/icons/boxingOptions.png"))
+        self.boxingOptionsAct.setIcon(QPixmap(project_resources.BoxingOptionsIconPath))
         self.boxingOptionsAct.triggered.connect(self.showBoxingOptions)
 
         self.boxingFormAct = QAction("Box view (for sorting boxes)")
@@ -239,7 +239,7 @@ class MainForm(QMainWindow):
 
         self.toggleViewerAct = QAction("Viewer")
         self.toggleViewerAct.setShortcut(QKeySequence("alt+i"))
-        self.toggleViewerAct.setIcon(QPixmap(project_resources.ViewAreaIconPath))
+        self.toggleViewerAct.setIcon(QPixmap(project_resources.ViewerAreaIconPath))
         self.toggleViewerAct.setCheckable(True)
         self.toggleViewerAct.setChecked(True)
         self.toggleViewerAct.triggered.connect(self.toggleViewerFcn)
@@ -276,10 +276,10 @@ class MainForm(QMainWindow):
         self.helpMenu = QMenu("&Help", self)
         self.manualAct = QAction("Open manual", self)
         self.manualAct.setStatusTip("Open TextChaser manual file")
-        self.manualAct.setIcon(QIcon("res/icons/manual.png"))
+        self.manualAct.setIcon(QPixmap(project_resources.ManualIconPath))
         self.aboutAct = QAction("About", self)
         self.aboutAct.setStatusTip("Show information about the program")
-        self.aboutAct.setIcon(QIcon("res/icons/about.png"))
+        self.aboutAct.setIcon(QPixmap(project_resources.AboutIconPath))
         self.helpMenu.addActions([self.manualAct, self.aboutAct])
         self.aboutAct.triggered.connect(self.showAboutFcn)
         # endregion help menu
@@ -305,19 +305,19 @@ class MainForm(QMainWindow):
         self.viewToolBtn = QToolButton(self)
         self.viewToolBtn.setToolTip("Show or hide areas")
         self.viewToolBtn.setStatusTip("Toggle visiblity for specific areas")
-        self.viewToolBtn.setIcon(QIcon("res/icons/viewOptions.png"))
+        self.viewToolBtn.setIcon(QPixmap(project_resources.ViewOptionsIconPath))
         self.viewToolBtn.addActions(
             [self.toggleToolBarAct, self.toggleTreeAct,
              self.toggleViewerAct, self.toggleEditorAct,
              self.toggleOptionBarAct, self.toggleFormatBarAct,
              self.toggleFontBarAct])
         # self.viewToolBtn.setMenu(self.toggleAreaSubMenu)
-        self.viewToolBtn.setPopupMode(QToolButton.MenuButtonPopup)
+        self.viewToolBtn.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
         self.viewToolBtn.clicked.connect(lambda: self.viewToolBtn.showMenu())
 
         self.startAct = QAction("Step start")
         self.startAct.setStatusTip("Start extraction process")
-        self.startAct.setIcon(QIcon("res/icons/start.png"))
+        self.startAct.setIcon(QPixmap(project_resources.StartIconPath))
         self.startAct.triggered.connect(self.startProcess)
 
         self.detectionModBtn = widgets.SwitchButton()
@@ -400,15 +400,13 @@ class MainForm(QMainWindow):
             self.FolderViewer.setVisible(True)
         elif self.FolderViewer.isMinimized():
             self.FolderViewer.setWindowState(Qt.WindowNoState)
-        else:
-            self.FolderViewer.move(self.xc, self.yc)
+
 
     def showBoxInsertionArea(self):
         if not self.BoxViewer.isVisible():
             self.BoxViewer.setVisible(True)
         elif self.BoxViewer.isMinimized():
             self.BoxViewer.setWindowState(Qt.WindowNoState)
-            self.BoxViewer.move(self.xc, self.yc)
         else:
             self.BoxViewer.activateWindow()
 
@@ -564,37 +562,37 @@ class MainForm(QMainWindow):
             col_min = min(entry[1]) - self.paddingValue
             col_max = max(entry[1]) + self.paddingValue
 
-            if self.boxingDirection == widgets.BoxingOptions.Left2Right:
+            if self.boxingDirection == widgets.BoxingDirection.Left2Right:
                 new_corner_list.append([col_min, row_min, col_max, row_max])
 
-            elif self.boxingDirection == widgets.BoxingOptions.Right2Left:
+            elif self.boxingDirection == widgets.BoxingDirection.Right2Left:
                 new_corner_list.append([col_max, col_min, row_max, row_min])
 
-            elif self.boxingDirection == widgets.BoxingOptions.Top2Bottom:
+            elif self.boxingDirection == widgets.BoxingDirection.Top2Bottom:
                 new_corner_list.append([row_min, col_min, row_max, col_max])
 
-            elif self.boxingDirection == widgets.BoxingOptions.Bottom2Top:
+            elif self.boxingDirection == widgets.BoxingDirection.Bottom2Top:
                 new_corner_list.append([row_max, col_min, col_max, row_min])
 
-        if self.boxingDirection == widgets.BoxingOptions.Left2Right:
+        if self.boxingDirection == widgets.BoxingDirection.Left2Right:
             new_corner_list.sort()
             for corners in new_corner_list:
                 aBoxedImage = original_image[corners[1]:corners[3], corners[0]:corners[2]]
                 directed_box_list.append(aBoxedImage)
 
-        elif self.boxingDirection == widgets.BoxingOptions.Right2Left:
+        elif self.boxingDirection == widgets.BoxingDirection.Right2Left:
             new_corner_list.sort(reverse=True)
             for corners in new_corner_list:
                 aBoxedImage = original_image[corners[3]:corners[2], corners[1]:corners[0]]
                 directed_box_list.append(aBoxedImage)
 
-        elif self.boxingDirection == widgets.BoxingOptions.Top2Bottom:
+        elif self.boxingDirection == widgets.BoxingDirection.Top2Bottom:
             new_corner_list.sort()
             for corners in new_corner_list:
                 aBoxedImage = original_image[corners[0]:corners[2], corners[1]:corners[3]]
                 directed_box_list.append(aBoxedImage)
 
-        elif self.boxingDirection == widgets.BoxingOptions.Bottom2Top:
+        elif self.boxingDirection == widgets.BoxingDirection.Bottom2Top:
             new_corner_list.sort(reverse=True)
             for corners in new_corner_list:
                 aBoxedImage = original_image[corners[3]:corners[0], corners[1]:corners[2]]

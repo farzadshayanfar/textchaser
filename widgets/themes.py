@@ -179,15 +179,13 @@ QAbstractScrollArea::corner {
 }
 
 QPushButton[accessibleName="StatusButton"] {
-font-family: "Segoe UI", "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue";
 font-size: 8pt;
 font-style: normal;
-margin: 4px 2px 0px 0px;
-padding: 2px 0px 5px 4px;
+margin: 4px;
+padding: 4px;
 border: 1px solid #b5b5b5;
-border-bottom: 0px;
 background-color: #ededed;
-border-radius: 5px;
+border-radius: 7px;
 }
 
 QPushButton[accessibleName="StatusButton"]:hover {

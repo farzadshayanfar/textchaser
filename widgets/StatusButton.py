@@ -6,8 +6,8 @@ class StatusButton(QPushButton):
     def __init__(self, label, parent=None):
         QPushButton.__init__(self, parent=None)
         self.setText(label)
-        self.setFixedSize(85, 38)
+        self.setFixedSize(85, 35)
         self.setCheckable(True)
-        self.setIconSize(QSize(25, 25))
+        self.setIconSize(QSize(20, 20))
 
         self.setAccessibleName("StatusButton")
