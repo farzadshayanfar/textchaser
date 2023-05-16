@@ -43,7 +43,7 @@ class MainForm(QMainWindow):
         self.nameChanger: int = 0
         self.StopProcess: bool = False
         self.paddingValue: int = int()
-        self.boxingDirection = widgets.BoxingOptions.Top2Bottom
+        self.boxingDirection = widgets.BoxingDirection.Top2Bottom
         self.showWordBoxing = bool()
         self.selectedLangsList = list()
         self.defaultLanguage = str("eng")
@@ -167,17 +167,17 @@ class MainForm(QMainWindow):
         self.instantExtractAct.setIcon(QPixmap(project_resources.InstantExtractionIconPath))
         self.colorMenu = QMenu("Set Color Space")
         self.colorMenu.setStatusTip("Convert color space")
-        self.colorMenu.setIcon(QIcon("res/icons/colorSpace"))
+        self.colorMenu.setIcon(QPixmap(project_resources.ColorSpaceIconPath))
         self.grayScaleAct = QAction("Grayscale")
         self.grayScaleAct.setStatusTip("Convert current image to gray space")
-        self.grayScaleAct.setIcon(QIcon("res/icons/grayPalette.png"))
+        self.grayScaleAct.setIcon(QPixmap(project_resources.GrayscaleIconPath))
         self.binarizeAct = QAction("Binarize")
         self.binarizeAct.setStatusTip("Convert current image to binary space")
-        self.binarizeAct.setIcon((QIcon("res/icons/binaryPalette.png")))
+        self.binarizeAct.setIcon(QPixmap(project_resources.BinarizeIconPath))
         self.colorMenu.addActions([self.grayScaleAct, self.binarizeAct])
         self.resetImageAct = QAction("Reset")
         self.resetImageAct.setStatusTip("Reset current image to orginal state")
-        self.resetImageAct.setIcon(QIcon("res/icons/reset.png"))
+        self.resetImageAct.setIcon(QPixmap(project_resources.ResetIconPath))
 
         self.resetZoomAct.setDisabled(True)
         self.cropAct.setDisabled(True)

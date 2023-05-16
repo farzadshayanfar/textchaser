@@ -1,14 +1,18 @@
+import enum
+
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QDialog, QLabel, QSpinBox, QComboBox, QPushButton, QGridLayout, QCheckBox
 
 
-class BoxingOptions(QDialog):
-    Left2Right = "left to right"
-    Right2Left = "right to left"
-    Top2Bottom = "top to bottom"
-    Bottom2Top = "bottom to top"
+class BoxingDirection(enum.Enum):
+    Left2Right = 0
+    Right2Left = 1
+    Top2Bottom = 2
+    Bottom2Top = 3
 
+
+class BoxingOptions(QDialog):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
 
@@ -32,7 +36,10 @@ class BoxingOptions(QDialog):
         self.boxingDirectionLbl = QLabel("Select the boxing direction:")
         self.boxingDirectionLbl.setWordWrap(True)
         self.boxingDirectionCombo = QComboBox()
-        self.boxingDirectionCombo.addItems((self.Left2Right, self.Right2Left, self.Top2Bottom, self.Bottom2Top))
+        self.boxingDirectionCombo.addItems((BoxingDirection.Left2Right,
+                                            BoxingDirection.Right2Left,
+                                            BoxingDirection.Top2Bottom,
+                                            BoxingDirection.Bottom2Top))
         for idx in range(0, 4):
             if self.boxingDirectionCombo.itemText(idx) == self.mainFormHandle.boxingDirection:
                 self.boxingDirectionCombo.setCurrentIndex(idx)

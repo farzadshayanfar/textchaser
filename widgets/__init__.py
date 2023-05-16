@@ -1,8 +1,7 @@
 from . import themes
 from .AboutDialog import AboutDialog
 from .BoxView import BoxView
-from .BoxingOptions import BoxingOptions
-from .CorrectionOptions import CorrectionOptions
+from .BoxingOptions import BoxingOptions, BoxingDirection
 from .FileBrowser import FileBrowser
 from .FolderView import FolderView
 from .FolderViewViewer import FolderViewViewer

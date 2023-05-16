@@ -2,13 +2,14 @@ import os.path
 
 import cv2 as cv
 from PySide6.QtCore import Qt, Signal, QSize
-from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QIcon, QKeyEvent, QWheelEvent, QContextMenuEvent, \
+from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QKeyEvent, QWheelEvent, QContextMenuEvent, \
     QAction
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QApplication, QMenu, QGraphicsPixmapItem, \
     QInputDialog, QMessageBox, QGraphicsRectItem
 
 from widgets.Worker import Worker
 
+import project_resources
 
 class ImageView(QGraphicsView):
     # Mouse button signals emit image scene (x, y) coordinates.
@@ -47,46 +48,46 @@ class ImageView(QGraphicsView):
         self.contextMenu = QMenu()
 
         self.panAct = QAction("Pan")
-        self.panAct.setIcon(QIcon("res/icons/pan.png"))
+        self.panAct.setIcon(QPixmap(project_resources.PanIconPath))
         self.panAct.triggered.connect(self.pan)
         self.zoomInAct = QAction("Zoom In")
-        self.zoomInAct.setIcon(QIcon("res/icons/zoomIn.png"))
-        self.zoomInPixmap = QPixmap("res/icons/zoomIn2.png")
+        self.zoomInPixmap = QPixmap(project_resources.ZoomInIconPath)
+        self.zoomInAct.setIcon(self.zoomInPixmap)
         self.zoomInCursor = QCursor(self.zoomInPixmap)
         self.zoomInAct.triggered.connect(self.zoomIn)
         self.zoomOutAct = QAction("Zoom Out")
-        self.zoomOutAct.setIcon(QIcon("res/icons/zoomOut.png"))
-        self.zoomOutPixmap = QPixmap("res/icons/zoomOut2.png")
+        self.zoomOutPixmap = QPixmap(project_resources.ZoomOutIconPath)
+        self.zoomOutAct.setIcon(self.zoomOutPixmap)
         self.zoomOutCursor = QCursor(self.zoomOutPixmap)
         self.zoomOutAct.triggered.connect(self.zoomOut)
         self.resetZoomAct = QAction("Reset Zoom")
-        self.resetZoomAct.setIcon(QIcon("res/icons/resetZoom.png"))
+        self.resetZoomAct.setIcon(QPixmap(project_resources.ResetZoomIconPath))
         self.resetZoomAct.triggered.connect(self.resetZoom)
         self.cropAct = QAction("Crop Image")
-        self.cropAct.setIcon(QIcon("res/icons/crop.png"))
+        self.cropAct.setIcon(QPixmap(project_resources.CropIconPath))
         self.cropAct.triggered.connect(self.cropImage)
-        self.scissorsPixmap = QPixmap("res/icons/scissors2.png")
+        self.scissorsPixmap = QPixmap(project_resources.ScissorsIconPath)
         self.scissorsCursor = QCursor(self.scissorsPixmap)
         self.rotateAct = QAction("Rotate Image")
-        self.rotateAct.setIcon(QIcon("res/icons/rotate.png"))
+        self.rotateAct.setIcon(QPixmap(project_resources.RotateIconPath))
         self.rotateAct.triggered.connect(self.rotateImage)
         self.instantExtractAct = QAction("Instant Extract")
-        self.instantExtractAct.setIcon(QIcon("res/icons/instantSelection.png"))
+        self.instantExtractAct.setIcon(QPixmap(project_resources.InstantExtractionIconPath))
         self.instantExtractAct.triggered.connect(self.extractSingleBox)
 
         self.colorMenu = QMenu("Set Color Space")
-        self.colorMenu.setIcon(QIcon("res/icons/colorSpace"))
+        self.colorMenu.setIcon(QPixmap(project_resources.ColorSpaceIconPath))
         self.grayScaleAct = QAction("Grayscale")
-        self.grayScaleAct.setIcon(QIcon("res/icons/grayPalette.png"))
+        self.grayScaleAct.setIcon(QPixmap(project_resources.GrayscaleIconPath))
         self.grayScaleAct.triggered.connect(self.makeItGray)
         self.binarizeAct = QAction("Binarize")
-        self.binarizeAct.setIcon((QIcon("res/icons/binaryPalette.png")))
+        self.binarizeAct.setIcon(QPixmap(project_resources.BinarizeIconPath))
         self.binarizeAct.triggered.connect(self.makeItBinary)
         self.colorMenu.addActions([self.grayScaleAct, self.binarizeAct])
 
         self.resetImageAct = QAction("Reset")
         self.resetImageAct.triggered.connect(self.resetImage)
-        self.resetImageAct.setIcon(QIcon("res/icons/reset.png"))
+        self.resetImageAct.setIcon(QPixmap(project_resources.ResetIconPath))
 
         self.contextMenu.addActions([self.panAct, self.zoomInAct, self.zoomOutAct, self.resetZoomAct, self.cropAct,
                                      self.rotateAct, self.instantExtractAct])
@@ -100,7 +101,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.wheelZoomPixmap = QPixmap("res/icons/wheelZoom.png")
+        self.wheelZoomPixmap = QPixmap(project_resources.MouseWheelIconPath)
         self.wheelZoomCursor = QCursor(self.wheelZoomPixmap)
 
         self.updatePixampSig.connect(self.setPixmapItem)
@@ -128,7 +129,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = True
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(Qt.CrossCursor)
 
     def pan(self):
@@ -149,7 +150,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.zoomInCursor)
 
     def zoomOut(self):
@@ -160,7 +161,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.zoomOutCursor)
 
     def resetZoom(self):
@@ -171,7 +172,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(Qt.ArrowCursor)
         self.updateViewer()
 
@@ -186,13 +187,8 @@ class ImageView(QGraphicsView):
         self.setCurrentRotation(d)
         self.pixmapItem().setTransformOriginPoint(self.pixmapItem().pixmap().rect().center())
         self.pixmapItem().setRotation(d)
-        output_add = self.tmpDirectory.name + str(self.nameChanger) + ".png"
         self.nameChanger -= 1
-        # pixmap = self.grab(self.pixmapItem().boundingRect().toRect())
-        # pixmap.save(output_add)
-        # self.setCurrentImagePath(output_add)
-        # self.updatePixampSig.emit(pixmap, QImage())
-        # self.updateViewer()
+
 
     def cropImage(self):
         self.panFlag = False
@@ -202,7 +198,7 @@ class ImageView(QGraphicsView):
         self.rotateFlag = False
         self.sExtractFlag = False
 
-        self.setDragMode(QGraphicsView.NoDrag)
+        self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.setCursor(self.scissorsCursor)
 
     def pixmapItem(self):
