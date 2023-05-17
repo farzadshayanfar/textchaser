@@ -8,7 +8,7 @@ class LineSpacingDialog(QDialog):
 
         self.Editor = parent
 
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
 
         self.setWindowTitle("Line Height")
         self.setWindowIcon(QIcon("res/icons/spacing.png"))

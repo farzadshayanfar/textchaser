@@ -38,8 +38,6 @@ class ViewArea(QWidget):
                <p style="text-align: center;">&nbsp;</p>
                <p style="text-align: center;">&nbsp;</p>
                """)
-        self.welcomeFont = QFont("Segoe UI", 11, 2, True)
-        self.welcomeLabel.setFont(self.welcomeFont)
         self.welcomeLabel.setWordWrap(True)
 
         self.vlayout.addWidget(self.tabWidget)

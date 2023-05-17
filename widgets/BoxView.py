@@ -31,8 +31,6 @@ class BoxView(QMainWindow):
         <p style="text-align: center;"><em>finally, you can filter box-text pairs that you want to insert.</em></p>
        """)
         self.noticeLabel.setWordWrap(True)
-        self.noticeLabelFont = QFont("Segoe UI", 11, 2, True)
-        self.noticeLabel.setFont(self.noticeLabelFont)
 
         self.slate = QWidget()
         self.slateLayout = QVBoxLayout(self.slate)

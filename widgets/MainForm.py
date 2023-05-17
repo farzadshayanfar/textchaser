@@ -22,6 +22,7 @@ class MainForm(QMainWindow):
     advanceProgressSig: Signal = Signal(int, int)
 
     Title: str = "TextChaser"
+    DefaultLanguage: str = "eng"
 
     def __init__(self):
         super(MainForm, self).__init__()
@@ -43,17 +44,16 @@ class MainForm(QMainWindow):
         self.nameChanger: int = 0
         self.StopProcess: bool = False
         self.paddingValue: int = int()
-        self.boxingDirection = widgets.BoxingDirection.Top2Bottom
-        self.showWordBoxing = bool()
-        self.selectedLangsList = list()
-        self.defaultLanguage = str("eng")
+        self.boxingDirection: widgets.BoxingDirection = widgets.BoxingDirection.Top2Bottom
+        self.showWordBoxing: bool = bool()
+        self.selectedLangsList: list = list()
         self.extractionLangIndex = int(23)
         self.segMode = int(3)
 
         # set tesseract binary path for pytesseract
         self.tesseractPath = "D:/Programs/Tesseract-OCR/tesseract.exe"
         pytesseract.tesseract_cmd = self.tesseractPath
-        self.tesseractConfigString = f"-l {self.defaultLanguage} --oem 1 --psm {self.segMode}"
+        self.tesseractConfigString = f"-l {self.DefaultLanguage} --oem 1 --psm {self.segMode}"
 
         self.boxDirection = str()
         self.setMinimumSize(400, 220)
@@ -74,7 +74,6 @@ class MainForm(QMainWindow):
         self.anHSplitter.setOrientation(Qt.Horizontal)
 
         self.welcomeLabel = QLabel()
-        self.welcomeLabel.setMinimumSize(10, 10)
         self.welcomeLabel.setText(f"""
         <p style="text-align: center;">&nbsp;<img src={project_resources.AppIconPath} width="150" height="160" /></p>
         <p style="text-align: center;"><em>Welcome to <strong>TextChaser</strong></em> ;</p>
@@ -84,7 +83,6 @@ class MainForm(QMainWindow):
         <p style="text-align: center;">Editor__<span style="color: #003366;">Alt+C</span></p>
         <p style="text-align: center;">Browser__<span style="color: #003366;">Alt+N</span></p>
         """)
-
         self.welcomeLabel.setWordWrap(True)
         self.welcomeLabel.setVisible(False)
         # endregion main form variables
@@ -410,9 +408,6 @@ class MainForm(QMainWindow):
         else:
             self.BoxViewer.activateWindow()
 
-    def updateImageViewHandles(self, image_view):
-        pass
-
     def openFileFcn(self):
         files = QFileDialog.getOpenFileNames(self, caption="Open Image File(s)", dir=".",
                                              filter="Image Files (*.png *.jpg *bmp *.tif)")[0]
@@ -638,10 +633,10 @@ class MainForm(QMainWindow):
             self.threadPool.start(worker)
 
     def closeEvent(self, event: QCloseEvent):
-        qassert = QMessageBox.question(self, "Assertion", "Are You Sure You Want to Quit?",
+        response = QMessageBox.question(self, "Assertion", "Are You Sure You Want to Quit?",
                                        QMessageBox.Yes | QMessageBox.No,
                                        QMessageBox.Yes)
-        if qassert == QMessageBox.Yes:
+        if response == QMessageBox.Yes:
             self.tmpDirectory.cleanup()
             self.FolderViewer.tmpDirectory.cleanup()
             self.FolderViewer.guestTempDir.cleanup()
@@ -649,7 +644,7 @@ class MainForm(QMainWindow):
             self.deleteLater()
             event.accept()
             QApplication.quit()
-        elif qassert == QMessageBox.No:
+        else:
             event.ignore()
 
     # endregion methods

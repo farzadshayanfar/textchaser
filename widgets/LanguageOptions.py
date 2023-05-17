@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon, QFont
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QDialog, QLabel, QComboBox, QPushButton, QVBoxLayout, QHBoxLayout, \
     QListWidget, QListWidgetItem, QMessageBox
 
@@ -39,7 +39,6 @@ class LanguageOptions(QDialog):
         self.addedLangsList = self.mainFormHandle.selectedLangsList
         self.addedLangsString = str()
         self.addedLangsLabel = QLabel()
-        self.aFont = QFont(QFont("Segoe UI", 14))
         self.addedLangsLabel.setStyleSheet("color: #35788f;")
 
         if len(self.mainFormHandle.selectedLangsList) > 0:
@@ -97,8 +96,6 @@ class LanguageOptions(QDialog):
         self.segCombo.setCurrentIndex(self.mainFormHandle.segMode)
 
         self.segInfoLabel = QLabel()
-        self.aFont2 = QFont("Segoe UI", 8)
-        self.segInfoLabel.setFont(self.aFont2)
         self.segInfoLabel.setWordWrap(True)
 
         self.okBtn = QPushButton("Okay")

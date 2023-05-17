@@ -60,8 +60,6 @@ class FolderView(QMainWindow):
         <p style="text-align: center;"><em> of a lot of images located in one&nbsp;</em><em>folder.</em></p>
         """)
         self.noticeLabel.setWordWrap(True)
-        self.noticeLabelFont = QFont("Segoe UI", 10, 2, True)
-        self.noticeLabel.setFont(self.noticeLabelFont)
 
         self.imageListWidget = ImageListWidget(parent=self)
 
