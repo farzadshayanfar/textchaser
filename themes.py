@@ -1,4 +1,12 @@
-zagros = """
+import enum
+
+
+class Themes(enum.Enum):
+    ZagrosLight = 0
+    ZagrosDark = 1
+
+
+zagros_light_qss = """
 QWidget {
 }
 

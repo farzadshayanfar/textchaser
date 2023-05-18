@@ -1,4 +1,3 @@
-from . import themes
 from .AboutDialog import AboutDialog
 from .BoxView import BoxView
 from .BoxingOptions import BoxingOptions, BoxingDirection
@@ -16,3 +15,4 @@ from .SwitchButton import SwitchButton
 from .TextEditor import Editor
 from .ViewArea import ViewArea
 from .Worker import Worker
+from .SettingsForm import SettingsForm
