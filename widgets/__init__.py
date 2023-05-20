@@ -8,6 +8,7 @@ from .ImageView import ImageView
 from .LanguageOptions import LanguageOptions
 from .MainForm import MainForm
 from .ProgressBar import ProgressBar
+from .SettingsForm import SettingsForm
 from .SplashScreen import SplashScreen
 from .StatusButton import StatusButton
 from .StatusLabel import StatusLabel
@@ -15,4 +16,3 @@ from .SwitchButton import SwitchButton
 from .TextEditor import Editor
 from .ViewArea import ViewArea
 from .Worker import Worker
-from .SettingsForm import SettingsForm

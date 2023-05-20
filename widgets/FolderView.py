@@ -3,7 +3,7 @@ import os
 import tempfile
 
 from PySide6.QtCore import Qt, QSize, Signal
-from PySide6.QtGui import QIcon, QFont, QCloseEvent, QContextMenuEvent, QAction
+from PySide6.QtGui import QIcon, QCloseEvent, QContextMenuEvent, QAction
 from PySide6.QtWidgets import QMainWindow, QToolBar, QListWidget, QFrame, QHBoxLayout, QSplitter, \
     QApplication, QLabel, QStatusBar, QFileDialog, QListWidgetItem, QMenu, QAbstractItemView
 

@@ -4,9 +4,8 @@ from PySide6.QtGui import QImage, QPixmap, QCursor, QResizeEvent, QKeyEvent, QWh
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QApplication, QMenu, QGraphicsPixmapItem, \
     QInputDialog, QGraphicsRectItem
 
-from widgets import Worker
-
 import project_resources
+from widgets import Worker
 
 
 class FolderViewViewer(QGraphicsView):

@@ -1,7 +1,6 @@
 import os
 
-from PySide6.QtCore import QDir, QStandardPaths, Qt, QSize
-from PySide6.QtGui import QResizeEvent
+from PySide6.QtCore import QDir, QStandardPaths, Qt
 from PySide6.QtWidgets import QTreeView, QFileSystemModel, QMessageBox
 
 from widgets import Worker
@@ -61,8 +60,3 @@ class FileBrowser(QTreeView):
             ix = ix.parent()
         for ix in indexes:
             self.expand(ix)
-
-    def resize(self, a0: QSize) -> None:
-        oldSize = self.size()
-        worker = Worker.Worker(self.resizeEvent, QResizeEvent(a0, oldSize))
-        self.threadPool.start(worker)

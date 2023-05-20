@@ -1,7 +1,7 @@
 import tempfile
 
 from PySide6.QtCore import Qt, QSize, Signal
-from PySide6.QtGui import QPixmap, QStandardItem, QIcon, QFont, QCloseEvent, QAction
+from PySide6.QtGui import QPixmap, QStandardItem, QIcon, QCloseEvent, QAction
 from PySide6.QtGui import QStandardItemModel
 from PySide6.QtWidgets import QMainWindow, QLabel, QHeaderView, QSizePolicy, QProxyStyle, QStyleOption, QTableView, \
     QToolBar, QStatusBar, QWidget, QVBoxLayout, QAbstractItemView

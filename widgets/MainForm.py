@@ -27,7 +27,7 @@ class MainForm(QMainWindow):
     def __init__(self):
         super(MainForm, self).__init__()
         # region setting configurations
-        splashScreen = widgets.SplashScreen()
+        splashScreen: widgets.SplashScreen = widgets.SplashScreen()
         self.advSplashProgressSig.emit("Setting Configurations ...")
         self.advSplashProgressSig.connect(splashScreen.advProgressFcn)
         # endregion setting configurations
@@ -338,17 +338,19 @@ class MainForm(QMainWindow):
         self.advSplashProgressSig.emit("Creating Status Bar ...")
 
         self.statusbar = QStatusBar()
-        self.statusbar.setMaximumHeight(38)
-        self.statusbar.setContentsMargins(0, 0, 0, 0)
+        self.statusbar.setMaximumHeight(40)
         self.setStatusBar(self.statusbar)
-        self.treeStatusBtn = widgets.StatusButton("Browser")
-        self.treeStatusBtn.setIcon(self.toggleTreeAct.icon())
+        self.treeStatusBtn = widgets.StatusButton(parent=self.statusbar,
+                                                  label=" Browser",
+                                                  icon=self.toggleTreeAct.icon())
         self.treeStatusBtn.setChecked(False)
-        self.viewerStatusBtn = widgets.StatusButton("Viewer")
-        self.viewerStatusBtn.setIcon(self.toggleViewerAct.icon())
+        self.viewerStatusBtn = widgets.StatusButton(parent=self.statusbar,
+                                                    label=" Viewer",
+                                                    icon=self.toggleViewerAct.icon())
         self.viewerStatusBtn.setChecked(True)
-        self.editorStatusBtn = widgets.StatusButton("Editor")
-        self.editorStatusBtn.setIcon(self.toggleEditorAct.icon())
+        self.editorStatusBtn = widgets.StatusButton(parent=self.statusbar,
+                                                    label=" Editor",
+                                                    icon=self.toggleEditorAct.icon())
         self.editorStatusBtn.setChecked(True)
         self.progressbar = widgets.ProgressBar(self)
         self.progressbar.setVisible(False)
@@ -398,7 +400,6 @@ class MainForm(QMainWindow):
             self.FolderViewer.setVisible(True)
         elif self.FolderViewer.isMinimized():
             self.FolderViewer.setWindowState(Qt.WindowNoState)
-
 
     def showBoxInsertionArea(self):
         if not self.BoxViewer.isVisible():
@@ -634,8 +635,8 @@ class MainForm(QMainWindow):
 
     def closeEvent(self, event: QCloseEvent):
         response = QMessageBox.question(self, "Assertion", "Are You Sure You Want to Quit?",
-                                       QMessageBox.Yes | QMessageBox.No,
-                                       QMessageBox.Yes)
+                                        QMessageBox.Yes | QMessageBox.No,
+                                        QMessageBox.Yes)
         if response == QMessageBox.Yes:
             self.tmpDirectory.cleanup()
             self.FolderViewer.tmpDirectory.cleanup()

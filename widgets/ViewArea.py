@@ -1,6 +1,6 @@
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QPixmap
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QTabWidget, QWidget, QLabel, \
     QMessageBox, QTabBar, QVBoxLayout
 

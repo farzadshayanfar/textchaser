@@ -1,9 +1,8 @@
-from typing import Union
-
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QSplitter, QVBoxLayout, QHBoxLayout
-from widgets import MainForm
+
 from settings import Settings
+from widgets import MainForm
 
 
 class SettingsForm(QWidget):
@@ -25,4 +24,3 @@ class SettingsForm(QWidget):
         self._bottomLayout = QHBoxLayout()
         self._mainLayout.addWidget(self._splitter)
         self._mainLayout.addLayout(self._bottomLayout)
-
